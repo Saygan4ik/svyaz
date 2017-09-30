@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Http\Requests\ProductRequest;
-use App\Repositories\CommentRepository;
+use App\Repositories\GroupRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class ProductController extends Controller
 {
     protected $productRepository;
-    protected $commentRepository;
+    protected $groupRepository;
 
-    public function __construct(ProductRepository $productRepository, CommentRepository $commentRepository) {
+    public function __construct(ProductRepository $productRepository, GroupRepository $groupRepository) {
         $this->productRepository = $productRepository;
-        $this->commentRepository = $commentRepository;
+        $this->groupRepository = $groupRepository;
         $this->middleware('admin')->except(['show']);
     }
 
@@ -26,7 +27,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $route = Route::current();
+        $group = $route->group;
+        if($group)
+            $products = $this->productRepository->getProductsOrderBy($this->groupRepository->getIdByName($group)->id);
+        else
+            $products = $this->productRepository->getProductsOrderBy();
+        $groups = $this->groupRepository->all();
+        return view('admin/product', compact('products', 'groups'));
     }
 
     /**
@@ -36,7 +44,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Comment::class);
+        $group = $this->groupRepository->all(['id', 'nameRU'])->pluck('nameRU', 'id');
+        return view('product/create', compact('group'));
     }
 
     /**
@@ -47,8 +56,8 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $this->authorize('create', Comment::class);
         $this->productRepository->store($request->all());
+        return redirect('/product');
     }
 
     /**
@@ -72,8 +81,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update', Comment::class);
         $product = $this->productRepository->getById($id);
+        $group = $this->groupRepository->all(['id', 'nameRU'])->pluck('nameRU', 'id');
+        return view('product/edit', compact('product', 'group'));
     }
 
     /**
@@ -85,8 +95,8 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-        $this->authorize('update', Comment::class);
         $this->productRepository->update($id, $request->all());
+        return redirect('product');
     }
 
     /**
@@ -98,5 +108,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $this->productRepository->delete($id);
+        return back();
     }
 }

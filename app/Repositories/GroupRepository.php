@@ -43,4 +43,8 @@ class GroupRepository extends BaseRepository {
         $group->save();
         return $group;
     }
+
+    public function getIdByName($name) {
+        return $this->model->where('name', '=', $name)->first();
+    }
 }

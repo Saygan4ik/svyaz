@@ -20,6 +20,9 @@ Route::get('group/{id}/orderBy{column?}_{direction?}', 'GroupController@orderBy'
 
 Route::resource('user', 'UserController');
 
-Route::resource('product', 'ProductController');
+Route::resource('product', 'ProductController', ['except' => 'index']);
+Route::get('product_{group?}', 'ProductController@index');
 
 Route::resource('comment', 'CommentController');
+
+Route::get('admin', 'AdminController@index');

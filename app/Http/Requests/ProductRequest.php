@@ -13,7 +13,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,6 @@ class ProductRequest extends FormRequest
         $id = $this->route('product');
         return [
             'name' => 'required|unique:products,name,'.$id.'|max:100',
-            'group_id' => 'required',
             'price' => 'numeric|nullable',
             'quantity' => 'numeric|nullable',
             'discount' => 'numeric|nullable|min:0'

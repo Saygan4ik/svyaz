@@ -2,12 +2,16 @@
 
 namespace App\Repositories;
 
+use App\Group;
 use App\Product;
 
 class ProductRepository extends BaseRepository {
 
-    public function __construct(Product $product) {
+    protected $groupRepository;
+
+    public function __construct(Product $product, GroupRepository $groupRepository) {
         $this->model = $product;
+        $this->groupRepository = $groupRepository;
     }
 
     /**
@@ -38,7 +42,15 @@ class ProductRepository extends BaseRepository {
         $product->name = $inputs['name'];
         $product->price = $inputs['price'];
         $product->quantity = $inputs['quantity'];
-        $product->discount = $inputs['discount'];
+        if($inputs['discount']) {
+            $product->discount = $inputs['discount'];
+            if($inputs['discount'] < 100) {
+                $product->total_price = $inputs['price'] / 100 * (100 - $inputs['discount']);
+            }
+            else {
+                $product->total_price = $inputs['price'] - $inputs['discount'];
+            }
+        }
         $product->save();
         return $product;
     }
@@ -56,5 +68,22 @@ class ProductRepository extends BaseRepository {
         }
 
         return $query;
+    }
+
+    public function count($group = null) {
+        if($group) {
+            return $this->model->where('group_id', '=', $group)->count();
+        }
+        return $this->model->count();
+    }
+
+    public function counts() {
+        $groups = $this->groupRepository->all();
+        $counts = [];
+        foreach ($groups as $group) {
+            $counts = array_add($counts, $group->id, $this->count($group->id));
+        }
+        $counts = array_add($counts, 'total', $this->count());
+        return $counts;
     }
 }

@@ -52,4 +52,18 @@ class CommentRepository extends BaseRepository {
     public function getAllCommentsByProductId($id) {
         return $this->model->where('product_id', '=', $id)->latest()->get();
     }
+
+    public function count($seen = null) {
+        if($seen) {
+            return $this->model->where('seen', '=', $seen)->count();
+        }
+        return $this->model->count();
+    }
+
+    public function counts() {
+        $counts = [];
+        $counts = array_add($counts, 'seen', $this->count(1));
+        $counts = array_add($counts, 'total', $this->count());
+        return $counts;
+    }
 }

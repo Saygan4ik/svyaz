@@ -9,6 +9,7 @@
 
 .menu ul li {
     text-transform: uppercase;
+    transition: 0.3s;
     border: 1px solid black;
     border-radius: 2px;
     margin: 1px;
@@ -18,7 +19,9 @@
 }
 
 .menu ul li:hover {
+    transition: 0.3s;
     background-color: grey;
+    color: white;
 }
 
 .menu a {
@@ -42,6 +45,7 @@
 }
 
 .product-item {
+    position: relative;
     border: 1px solid black;
     background-color: white;
     margin: 10px 0px;
@@ -113,4 +117,63 @@
     background-color: red;
     color: black;
     border: 1px solid black;
+}
+
+.admin-item {
+    color: white;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    background-color: grey;
+}
+
+.admin-item a {
+    color: white;
+}
+
+.group-item {
+    position: relative;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.group-item #delete_group_button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: red;
+    color: black;
+}
+
+.product-block {
+    color: white;
+}
+
+.product-block a {
+    color: white;
+}
+
+.product-item #product_edit_button {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.product-item #product_delete_button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: red;
+}
+
+.create-product-block {
+    color: white;
+}
+
+.create-product-block select {
+    color: black;
+    width: 100%;
+    font-size: 20px;
 }

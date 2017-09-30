@@ -46,4 +46,22 @@ class UserRepository extends BaseRepository {
         $user->save();
         return $user;
     }
+
+    public function count($seen = null, $admin = null) {
+        if($seen) {
+            return $this->model->where('seen', '=', $seen)->count();
+        }
+        if($admin) {
+            return $this->model->where('isAdmin', '=', $admin)->count();
+        }
+        return $this->model->count();
+    }
+
+    public function counts() {
+        $counts = [];
+        $counts = array_add($counts, 'seen', $this->count(1));
+        $counts = array_add($counts, 'total', $this->count());
+        $counts = array_add($counts, 'admin', $this->count(null, 1));
+        return $counts;
+    }
 }

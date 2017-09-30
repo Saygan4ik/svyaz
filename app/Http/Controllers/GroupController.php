@@ -34,7 +34,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = $this->groupRepository->all();
+        return view('group/index', compact('groups'));
     }
 
     /**
@@ -56,6 +57,7 @@ class GroupController extends Controller
     public function store(GroupRequest $request)
     {
         $this->groupRepository->store($request->all());
+        return back();
     }
 
     /**
@@ -89,6 +91,7 @@ class GroupController extends Controller
     public function update(GroupRequest $request, $id)
     {
         $this->groupRepository->update($id, $request->all());
+        return back();
     }
 
     /**
@@ -100,6 +103,7 @@ class GroupController extends Controller
     public function destroy($id)
     {
         $this->groupRepository->delete($id);
+        return back();
     }
 
     public function orderBy($id) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Http\Requests\CommentRequest;
 use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
+        $this->authorize('create', Comment::class);
         $inputs = $request->except('_token');
         $user = Auth::user();
         $inputs = array_add($inputs, 'user_id', $user->id);
@@ -81,6 +83,7 @@ class CommentController extends Controller
      */
     public function update(CommentRequest $request, $id)
     {
+        $this->authorize('update', Comment::class);
         $inputs = $request->except('_token');
         $user = Auth::user();
         $inputs = array_add($inputs, 'user_id', $user->id);
