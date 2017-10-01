@@ -177,3 +177,41 @@
     width: 100%;
     font-size: 20px;
 }
+
+.users-block {
+    color: white;
+}
+
+.users-block a {
+    color: white;
+}
+
+.user-item {
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+}
+
+.user-button {
+    display: flex;
+}
+
+.user-seen-1 input[type="submit"] {
+    background-color: lightgreen;
+}
+
+.user-seen-0 input[type="submit"] {
+    background-color: blue;
+}
+
+.create-user-block {
+    color: white;
+}
+
+.create-user-field {
+    padding: 5px;
+}

@@ -18,7 +18,10 @@ Route::get('/', 'HomeController@index');
 Route::resource('group', 'GroupController');
 Route::get('group/{id}/orderBy{column?}_{direction?}', 'GroupController@orderBy');
 
-Route::resource('user', 'UserController');
+Route::resource('user', 'UserController', ['except' => 'index']);
+Route::get('user_{role?}', 'UserController@index');
+Route::post('user/ajaxChangeSeen', 'UserController@changeSeen');
+Route::post('user/ajaxChangeAdmin', 'UserController@changeAdmin');
 
 Route::resource('product', 'ProductController', ['except' => 'index']);
 Route::get('product_{group?}', 'ProductController@index');

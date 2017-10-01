@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
 use App\Http\Requests\ProductRequest;
 use App\Repositories\GroupRepository;
 use App\Repositories\ProductRepository;

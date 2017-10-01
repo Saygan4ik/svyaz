@@ -22,10 +22,10 @@
 
     <div class="admin-item">
         <h3>Users: {{ $users['total'] }}</h3>
-        <span>new = {{ $users['total']-$users['seen'] }}</span>
-        <span>admin(s) = {{ $users['admin'] }}</span>
+        <a href="/user_new">new = {{ $users['total']-$users['seen'] }}</a>
+        <a href="/user_admin">admin(s) = {{ $users['admin'] }}</a>
         <br>
-        <a href="#" class="btn btn-primary">Next</a>
+        <a href="/user" class="btn btn-primary">Next</a>
     </div>
 
     <div class="admin-item">

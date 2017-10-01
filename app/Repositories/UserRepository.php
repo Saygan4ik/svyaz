@@ -64,4 +64,35 @@ class UserRepository extends BaseRepository {
         $counts = array_add($counts, 'admin', $this->count(null, 1));
         return $counts;
     }
+
+    public function getUsersSortBy($sortBy = null, $nmbPage = 10) {
+        if($sortBy == 'new') {
+            $query = $this->model->where('seen', '=', 0);
+            return $query->paginate($nmbPage);
+        }
+        if($sortBy == 'admin') {
+            $query = $this->model->where('isAdmin', '=', 1);
+            return $query->paginate($nmbPage);
+        }
+        $query = $this->model;
+        return $query->paginate($nmbPage);
+    }
+
+    public function changeUserSeen($id) {
+        $user = $this->getById($id);
+        if($user->seen)
+            $user->seen = 0;
+        else
+            $user->seen = 1;
+        $user->save();
+    }
+
+    public function changeUserAdmin($id) {
+        $user = $this->getById($id);
+        if($user->isAdmin)
+            $user->isAdmin = 0;
+        else
+            $user->isAdmin = 1;
+        $user->save();
+    }
 }
