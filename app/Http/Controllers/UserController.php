@@ -116,4 +116,10 @@ class UserController extends Controller
         $this->userRepository->changeUserAdmin($request['id']);
         return \response()->json($request['id']);
     }
+
+    public function getUserComments($id) {
+        $user = $this->userRepository->getById($id);
+        $comments = $user->comments;
+        return view('comment/show', compact('comments'));
+    }
 }

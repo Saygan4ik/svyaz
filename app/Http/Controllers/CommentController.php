@@ -7,6 +7,7 @@ use App\Http\Requests\CommentRequest;
 use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class CommentController extends Controller
 {
@@ -15,6 +16,7 @@ class CommentController extends Controller
     public function __construct(CommentRepository $commentRepository) {
         $this->commentRepository = $commentRepository;
         $this->middleware('auth');
+        $this->middleware('admin')->only(['index', 'changeSeen']);
     }
 
     /**
@@ -24,7 +26,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $route = Route::current();
+        $comments = $this->commentRepository->getAllComments($route->new);
+        return view('comment/index', compact('comments'));
     }
 
     /**
@@ -103,5 +107,10 @@ class CommentController extends Controller
         $this->authorize('update', $comment);
         $this->commentRepository->delete($id);
         return back();
+    }
+
+    public function changeSeen(Request $request) {
+        $this->commentRepository->changeCommentSeen($request['id']);
+        return \response()->json($request['id']);
     }
 }

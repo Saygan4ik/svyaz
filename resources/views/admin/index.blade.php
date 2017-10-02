@@ -30,9 +30,9 @@
 
     <div class="admin-item">
         <h3>Comments: {{ $comments['total'] }}</h3>
-        <span>new = {{ $comments['total']-$comments['seen'] }}</span>
+        <a href="/comment_new">new = {{ $comments['total']-$comments['seen'] }}</a>
         <br>
-        <a href="#" class="btn btn-primary">Next</a>
+        <a href="/comment" class="btn btn-primary">Next</a>
     </div>
 
 @endsection

@@ -15,6 +15,7 @@
                 <div class="user-name">{{ $user->name }}</div>
                 <div class="user-email">{{ $user->email }}</div>
                 <div class="user-button">
+                    <a href="/user/{{ $user->id }}/comments" class="btn" style="background-color: orchid">Comments</a>
                     <div class="user-seen-{{ $user->seen }} user-seen-button user-seen-button-{{ $user->id }}">
                         {{ Form::submit('Seen', ['class' => 'btn']) }}
                     </div>

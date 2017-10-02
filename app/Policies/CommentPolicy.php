@@ -22,7 +22,7 @@ class CommentPolicy
     }
 
     public function create(User $user) {
-        return Auth::check();
+        return $user === Auth::user();
     }
 
     public function update(User $user, Comment $comment) {

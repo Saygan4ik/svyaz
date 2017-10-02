@@ -215,3 +215,23 @@
 .create-user-field {
     padding: 5px;
 }
+
+.comments-block {
+    color: white;
+}
+
+.comment-item {
+    color: black;
+}
+
+.comment-button {
+    display: flex;
+}
+
+.comment-seen-1 input[type="submit"] {
+    background-color: lightgreen;
+}
+
+.comment-seen-0 input[type="submit"] {
+    background-color: blue;
+}

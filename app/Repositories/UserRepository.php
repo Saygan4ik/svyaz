@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository extends BaseRepository {
 
@@ -89,6 +90,8 @@ class UserRepository extends BaseRepository {
 
     public function changeUserAdmin($id) {
         $user = $this->getById($id);
+        if(Auth::user()->id == $user->id)
+            return false;
         if($user->isAdmin)
             $user->isAdmin = 0;
         else

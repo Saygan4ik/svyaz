@@ -49,8 +49,23 @@ class CommentRepository extends BaseRepository {
         return $comment;
     }
 
+    public function getAllComments($new = null, $nmbPage = 10) {
+        if($new)
+            return $this->model->where('seen', '=', 0)->paginate($nmbPage);
+        return $this->model->paginate($nmbPage);
+    }
+
     public function getAllCommentsByProductId($id) {
         return $this->model->where('product_id', '=', $id)->latest()->get();
+    }
+
+    public function changeCommentSeen($id) {
+        $comment = $this->getById($id);
+        if($comment->seen)
+            $comment->seen = 0;
+        else
+            $comment->seen = 1;
+        $comment->save();
     }
 
     public function count($seen = null) {

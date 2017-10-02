@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Repositories\CommentRepository;
 use App\Repositories\GroupRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
@@ -12,10 +13,14 @@ class ProductController extends Controller
 {
     protected $productRepository;
     protected $groupRepository;
+    protected $commentRepository;
 
-    public function __construct(ProductRepository $productRepository, GroupRepository $groupRepository) {
+    public function __construct(ProductRepository $productRepository,
+                                GroupRepository $groupRepository,
+                                CommentRepository $commentRepository) {
         $this->productRepository = $productRepository;
         $this->groupRepository = $groupRepository;
+        $this->commentRepository = $commentRepository;
         $this->middleware('admin')->except(['show']);
     }
 
