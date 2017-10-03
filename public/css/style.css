@@ -235,3 +235,114 @@
 .comment-seen-0 input[type="submit"] {
     background-color: blue;
 }
+
+.average-rating {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    border: 1px dashed red;
+    background-color: black;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0px 10px;
+}
+
+.rating {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    display: flex;
+    border: 3px solid black;
+    border-radius: 5px;
+    background-color: green;
+}
+
+.user-rating {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    background-color: red;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 3px;
+    padding: 0px 5px;
+}
+
+.user-rating p {
+    font-size: 10px;
+    line-height: 10px;
+    padding: 5px;
+    margin: 0px;
+}
+
+.case-rating {
+    display: flex;
+    margin-left: 10px;
+    align-items: flex-end;
+    padding-bottom: 0px;
+    margin-bottom: 5px;
+}
+
+.case-rating-btn {
+    border: none;
+}
+
+.case-rating-1 {
+    content: '';
+    width: 10px;
+    height: 5px;
+}
+
+.case-rating-2 {
+    content: '';
+    width: 10px;
+    height: 10px;
+}
+
+.case-rating-3 {
+    content: '';
+    width: 10px;
+    height: 15px;
+}
+
+.case-rating-4 {
+    content: '';
+    width: 10px;
+    height: 20px;
+}
+
+.case-rating-5 {
+    content: '';
+    width: 10px;
+    height: 25px;
+}
+
+.case-rating-grey {
+    background-color: grey;
+    margin-right: 5px;
+}
+
+.case-rating-green {
+    background-color: green;
+    margin-right: 5px;
+}
+
+.avg-rating {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    background-color: red;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 3px;
+    line-height: 10px;
+    font-size: 10px;
+    padding: 5px;
+}

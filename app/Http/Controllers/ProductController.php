@@ -6,7 +6,9 @@ use App\Http\Requests\ProductRequest;
 use App\Repositories\CommentRepository;
 use App\Repositories\GroupRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\RatingRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 class ProductController extends Controller
@@ -14,13 +16,16 @@ class ProductController extends Controller
     protected $productRepository;
     protected $groupRepository;
     protected $commentRepository;
+    protected $ratingRepository;
 
     public function __construct(ProductRepository $productRepository,
                                 GroupRepository $groupRepository,
-                                CommentRepository $commentRepository) {
+                                CommentRepository $commentRepository,
+                                RatingRepository $ratingRepository) {
         $this->productRepository = $productRepository;
         $this->groupRepository = $groupRepository;
         $this->commentRepository = $commentRepository;
+        $this->ratingRepository = $ratingRepository;
         $this->middleware('admin')->except(['show']);
     }
 
@@ -74,7 +79,11 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->getById($id);
         $comments = $this->commentRepository->getAllCommentsByProductId($id);
-        return view('product/show', compact('product', 'comments'));
+        if (Auth::check()) {
+            $user = Auth::user();
+            $rating = $this->ratingRepository->getRatingForProduct($id, $user->id)->first();
+        }
+        return view('product/show', compact('product', 'comments', 'rating'));
     }
 
     /**

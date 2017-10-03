@@ -88,6 +88,7 @@
         </div>
     </div>
 
+    @include('error/error')
 
 </div>
 

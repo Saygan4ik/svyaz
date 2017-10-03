@@ -24,6 +24,7 @@ Route::get('user_{role?}', 'UserController@index');
 Route::post('user/ajaxChangeSeen', 'UserController@changeSeen');
 Route::post('user/ajaxChangeAdmin', 'UserController@changeAdmin');
 
+Route::post('product/ajaxRating', 'RatingController@saveRating');
 Route::resource('product', 'ProductController', ['except' => 'index']);
 Route::get('product_{group?}', 'ProductController@index');
 

@@ -13,4 +13,8 @@ class Product extends Model
     public function comments() {
         return $this->hasMany('App\Comment', 'product_id', 'id');
     }
+
+    public function ratings() {
+        return $this->hasMany('App\Rating', 'product_id', 'id');
+    }
 }

@@ -2,12 +2,11 @@
 
 namespace App\Policies;
 
-use App\Comment;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 
-class CommentPolicy
+class RatingPolicy
 {
     use HandlesAuthorization;
 
@@ -19,16 +18,5 @@ class CommentPolicy
     public function __construct()
     {
         //
-    }
-
-    public function update(User $user, Comment $comment) {
-        return $user->id === $comment->user_id;
-    }
-
-    public function before($user, $ability)
-    {
-        if ($user->isAdmin) {
-            return true;
-        }
     }
 }

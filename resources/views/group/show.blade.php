@@ -17,6 +17,13 @@
                 <p>Discount!!! {{ $product->discount }}</p>
                 <p>Total price: {{ $product->total_price }}</p>
             @endif
+            <div class="average-rating">
+                @if($product->sumRating)
+                    {{ $product->sumRating / $product->quantityRating }}
+                @else
+                    no ratings :(
+                @endif
+            </div>
             <a href="/product/{{ $product->id }}" class="btn btn-primary">Read more</a>
         </div>
     @endforeach

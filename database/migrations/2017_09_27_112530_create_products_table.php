@@ -21,6 +21,8 @@ class CreateProductsTable extends Migration
             $table->integer('quantity')->nullable();
             $table->integer('discount')->nullable();
             $table->integer('total_price')->nullable();
+            $table->integer('quantityRating')->nullable();
+            $table->integer('sumRating')->nullable();
             $table->timestamps();
 
             $table->foreign('group_id')

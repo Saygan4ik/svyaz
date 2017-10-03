@@ -3,12 +3,37 @@
 @section('content')
 
     <div class="product-item">
+        <div class="productId hidden">{{ $product->id }}</div>
         <p>Model: {{ $product->name }}</p>
         <p>Price: {{ $product->price }}</p>
         @if($product->discount)
             <p>Discount!!! {{ $product->discount }}</p>
             <p>Total price: {{ $product->total_price }}</p>
         @endif
+        <div class="rating">
+            <div class="user-rating">
+                <p>Your rating</p>
+                <div class="case-rating">
+                    @if(Auth::check())
+                        <button class="case-rating-btn case-rating-1 @if($rating['rating'] >= 1) case-rating-green @else case-rating-grey @endif" value="1"></button>
+                        <button class="case-rating-btn case-rating-2 @if($rating['rating'] >= 2) case-rating-green @else case-rating-grey @endif" value="2"></button>
+                        <button class="case-rating-btn case-rating-3 @if($rating['rating'] >= 3) case-rating-green @else case-rating-grey @endif" value="3"></button>
+                        <button class="case-rating-btn case-rating-4 @if($rating['rating'] >= 4) case-rating-green @else case-rating-grey @endif" value="4"></button>
+                        <button class="case-rating-btn case-rating-5 @if($rating['rating'] >= 5) case-rating-green @else case-rating-grey @endif" value="5"></button>
+                    @else
+                        <p>Not auth</p>
+                    @endif
+                </div>
+            </div>
+            <div class="avg-rating">
+                <p>avg</p>
+                @if($product->sumRating)
+                    <p>{{ $product->sumRating / $product->quantityRating }}</p>
+                @else
+                    <p>no ratings :(</p>
+                @endif
+            </div>
+        </div>
     </div>
 
 @endsection
@@ -57,16 +82,47 @@
 @section('script')
 
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $(document).ready(function() {
             $('#comment_create').click(function() {
                 $('.comment-new-field').toggleClass('hidden');
             });
+
             $('.comment-edit').click(function() {
                 var comment = $(this).parent();
                 var textComment = comment.children('#comment_text').text();
                 comment.children('#comment_text').toggleClass('hidden');
                 comment.children('#comment_text_edit').toggleClass('hidden');
-            })
+            });
+
+            $('.case-rating-btn').click(function(e) {
+                e.preventDefault();
+                var productId = $('.productId').text();
+                var val = $(this).val();
+                $.ajax({
+                    url: '../product/ajaxRating',
+                    type: 'POST',
+                    data: {value : val, productId : productId},
+                    dataType: 'json',
+                    success: function(data) {
+                        for (var i = 1; i <= 5; i++) {
+                            if (i <= data) {
+                                $('.case-rating-'+i).removeClass('case-rating-grey');
+                                $('.case-rating-'+i).addClass('case-rating-green');
+                            }
+                            else {
+                                $('.case-rating-'+i).removeClass('case-rating-green');
+                                $('.case-rating-'+i).addClass('case-rating-grey');
+                            }
+                        }
+                    }
+                });
+            });
         });
     </script>
 
